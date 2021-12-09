@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
+#include <fstream>
 #define HEX_BASE 16
 #define BIN_BASE 2
 #define LEN 2048
@@ -48,7 +49,6 @@ void calD(mpz_t &return_d, mpz_t &p, mpz_t &q, mpz_t &e)
 string encryptPKey(string &plain_text, mpz_t &n, mpz_t &e)
 { //使用公钥加密
     mpz_t M, C;
-    //const char* p=plain_text.data();
     mpz_init_set_str(M, plain_text.data(), HEX_BASE);
     mpz_init_set_ui(C, 0);
     //计算密文
@@ -57,26 +57,9 @@ string encryptPKey(string &plain_text, mpz_t &n, mpz_t &e)
     string return_str;
     mpz_get_str(encrypted_str, HEX_BASE, C);
     return_str = encrypted_str;
-    mpz_clear(M);
-    mpz_clear(C);
     return return_str;
 }
 
-string encryptSKey(string plain_text, mpz_t n, mpz_t d)
-{ //使用私钥签名
-    mpz_t M, C;
-    mpz_init_set_str(M, plain_text.data(), HEX_BASE);
-    mpz_init_set_ui(C, 0);
-    //计算密文
-    mpz_powm(C, M, d, n);
-    char *encrypted_str = new char[plain_text.length() + 16];
-    string return_str;
-    mpz_get_str(encrypted_str, HEX_BASE, C);
-    return_str = encrypted_str;
-    mpz_clear(M);
-    mpz_clear(C);
-    return return_str;
-}
 
 string decryptSKey(string &cipher_text, mpz_t &n, mpz_t &d)
 {
