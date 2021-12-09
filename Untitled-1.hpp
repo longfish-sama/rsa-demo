@@ -60,7 +60,6 @@ string encryptPKey(string &plain_text, mpz_t &n, mpz_t &e)
     return return_str;
 }
 
-
 string decryptSKey(string &cipher_text, mpz_t &n, mpz_t &d)
 {
     mpz_t M, C;
